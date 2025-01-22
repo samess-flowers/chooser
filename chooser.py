@@ -1,8 +1,16 @@
 #!python3
 
+import shutil
+import subprocess
+import os
 import tempfile
-from tkinter.filedialog import askopenfilename
-
+try:
+    from tkinter.filedialog import askopenfilename
+except ModuleNotFoundError:
+    print("You need to install pytk")
+    os.exit(10)
+from rich.traceback import install
+install(show_locals=True)
 
 def main():
     '''
@@ -14,9 +22,12 @@ def main():
     clean up tempdir
     '''
     with tempfile.TemporaryDirectory() as dir:
-        filename = askopenfilename()
-        print(filename)
         print(dir)
+        remote_file = askopenfilename()    
+        local_file = shutil.copy(remote_file, dir)
+        print(local_file)
+        subprocess.run(["vlc", local_file])
+    print("temp deleted")
     ...
 
 
