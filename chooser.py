@@ -2,13 +2,13 @@
 
 import shutil
 import subprocess
-import os
+import sys
 import tempfile
 try:
     from tkinter.filedialog import askopenfilename
 except ModuleNotFoundError:
-    print("You need to install pytk")
-    os.exit(10)
+    print("ERROR: MISSING TKINTER")
+    sys.exit(10)
 
 def main():
     '''
@@ -24,7 +24,14 @@ def main():
         remote_file = askopenfilename()    
         local_file = shutil.copy(remote_file, dir)
         print(local_file)
-        subprocess.run(["vlc", local_file])
+        print(sys.platform)
+        if sys.platform == "darwin":
+            subprocess.run(["vlc", local_file])
+        elif sys.platform == "win32":
+            subprocess.run(["C:\\Program Files\\VideoLAN\\VLC\\vlc.exe", local_file])
+        else:
+            print("ERROR: UNKNOWN OS")
+            sys.exit(20)
     print("temp deleted")
     ...
 
