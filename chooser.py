@@ -9,8 +9,6 @@ try:
 except ModuleNotFoundError:
     print("You need to install pytk")
     os.exit(10)
-from rich.traceback import install
-install(show_locals=True)
 
 def main():
     '''
